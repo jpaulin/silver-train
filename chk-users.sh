@@ -43,7 +43,7 @@ function checkPwdFile() {
     # Unknown shell programs will be listed as violating the safety
     # Ie. exit code
     shellist=`cat $userfile | cut -d : -f 7 | sort | uniq`
-    if [ $quietmode -gt 0 ]; then
+    if [ ! $quietmode -gt 0 ]; then
 	echo $shellist
     fi
 }
@@ -73,10 +73,6 @@ while [[ $# -gt 0 ]]; do
     shift
 done
 
-if [
-echo Flags now
-echo "quietmode: $quietmode"
-echo "------------"
 # Check the ability to read the passwd file
 if [ ! -f $userfile ]; then
     echo "Error! Not able to read the user file at /etc/passwd"
@@ -86,5 +82,5 @@ fi
 # Get unique shells, and check for security requirements
 echo "Following logon shells found on system:"
 checkPwdFile
-
+# Clean exit. Note, yet this script does not actually check things.
 exit 0
